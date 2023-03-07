@@ -1,3 +1,79 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+header img.w-1\/2 {
+    width: 100px;
+}
+
+.h-screen{
+    height: 70vh;
+}
+h1{
+    font-size: 2rem !important;
+    color: #00ff00;
+}
+
+h2{
+    font-size: 1.5rem !important;
+    color: purple;
+}
+
+.left-container{
+    margin: 50px;
+    border: 1px solid #00ff00;
+    width: 300px;
+    color: #00ff00
+}
+
+button svg{
+    color: #00ff00;
+}
+
+button{
+    padding: 20px;
+}
+
+Button.btn-primary, input[type="file"]{
+    background-color: transparent !important;
+    margin: 50px;
+    color: #00ff00 !important;
+    border-color: #00ff00 !important;
+
+}
+
+.data-container{
+    margin: 50px;
+}
+
+input{
+    padding: 20px;
+    width: 250px;
+    border: 1px solid #00ff00;
+    margin: 0 20px !important;
+}
+
+label{
+    padding: 20px;
+}
+
+img.selected-image{
+    margin: 0 auto;
+}
+
+.image-container button{
+    display: block;
+    margin: 0 auto;
+}
+
+footer{
+    font-family: arial;
+    margin: 20px;
+    color: #00ff00;
+    float: right;
+}
+
+footer a, footer a:hover, footer a:active{
+    color: #00ff00;
+    text-decoration: underline;
+}
