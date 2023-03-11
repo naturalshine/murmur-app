@@ -14,6 +14,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Button from 'react-bootstrap/Button';
 
 import { FileContext } from '../contexts/fileContext';
+import { VideoContext } from '../contexts/videoContext';
 import { mintSamplePack } from '../utils/mintSamplePack';
 import { mintSample } from '../utils/mintSample';
 
@@ -28,7 +29,8 @@ const AudioWaveform = () => {
 	const [status, setStatus] = useState('');
 	// fetch file url from the context
 	const { fileURL, setFileURL } = useContext(FileContext);
-	
+	const { videoId, setVideoId, samplePackId, setSamplePackId } = useContext(VideoContext);
+
 
 	const handleSamplePackName = event => {
 		setSamplePackName(event.target.value);
@@ -197,14 +199,15 @@ const AudioWaveform = () => {
 	const handleSubmit = async() => {
 		setStatus("Creating Sample Pack...")
 		const createSampleNft = await mintSamplePack(selectedImage, samplePackName, samplePackDescription);
-		
+		setSamplePackId(createSampleNft.result.data.message[0].id);
+		console.log("VIDEO ID =>", videoId);
+		console.log("SAMPLE PACK ID =>", samplePackId);
+
 		for (const sample of samples) {
 			sample.start = Math.round( sample.start );
 			sample.end = Math.round( sample.end );
-			sample.packId = createSampleNft.result.data.message[0].id;
-			sample.videoId = 4;
-			sample.tablelandPackId = createSampleNft.result.data.message[0].id;
-			sample.tablelandVideoId = createSampleNft.result.data.message[0].id;
+			sample.pack_id = createSampleNft.result.data.message[0].id;
+			sample.video_id = videoId;
 			sample.title = samplePackName + " " + sample.index.toString();
 			sample.description = samplePackDescription;
 			sample.start_time = sample.start.toString();

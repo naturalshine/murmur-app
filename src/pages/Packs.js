@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import AudioWaveform from '../components/AudioWaveform';
 import { FileContext } from '../contexts/fileContext';
+import { VideoContext } from '../contexts/videoContext'
 
 
 const Packs = () => {
 	const { fileURL, setFileURL } = useContext(FileContext);
+    const { videoId, setVideoId } = useContext(VideoContext);
 
 	return (
 		<div>

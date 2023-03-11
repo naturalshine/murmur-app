@@ -4,18 +4,24 @@ import Button from 'react-bootstrap/Button';
 
 import mux from "mux-embed";
 import { useCallback, useEffect, useContext, useState } from "react";
+
 import { FileContext } from '../contexts/fileContext';
+import { VideoContext } from '../contexts/videoContext';
 
 import { fetchVideos } from "../utils/fetchVideos";
+import { collectVideo } from '../utils/collectVideo';
 
 
-const Home = () => {
+const Home = ({walletAddress}) => {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [playerRef, setPlayerRef] = useState();
   const [video, setVideo ] = useState('');
-  const [audio, setAudio ] = useState('');
+  const [videoTablelandId, setVideoTablelandId] = useState();
+  const [status, setStatus] = useState('');
+	
+  const { videoId, setVideoId } = useContext(VideoContext);
 
 	const { fileURL, setFileURL } = useContext(FileContext);
 
@@ -26,30 +32,45 @@ const Home = () => {
 
   const handleCollect = async () => {
     console.log("Collecting....");
+    setStatus("Collecting video... " + videoTablelandId.toString());
+    const tokenReturn = await collectVideo(videoTablelandId);
+    if(tokenReturn.success){
+      setStatus("Video collected with token id: ", tokenReturn.status)
+    } else {
+      console.log("collecting failed")
+      setStatus("Video collection failed ", tokenReturn.status)
+    }
   }
 
   const getVideos = async () => {
     const results = await fetchVideos();
-    console.log("AUDIO =>", results.videos[0].audio)
-    const audioHash = 'bafybeiariunfq7wi77df4k5iocdmk3it22rlip5jzmigv2dzhn2k2djjkm'
-    const audioUrl = "https://" + audioHash + '.ipfs.w3s.link/'
-    //const hash = audioHash.replace(/^ipfs?:\/\//, '')
-    //const audioUrl = URL + hash
-    return [results, audioUrl]
+    return results
   }
 
   useEffect(() => {
       getVideos().then((res) => {
-        console.log("FRONT END RESULTS =>", res[0]);
-        setVideo(res[0].videos[0].video);
-        console.log(video);
-        setUrl('ipfs://bafybeic7qz4n3dtk6jpede5za5w2zlir3fberdt5zxb3bskytfo266sbcu');
-        setTitle(res[0].videos[0].title);
-        console.log("AUDIO URL =>", res[1]);
-        setAudio(res[1])
-        const localAudio = URL.createObjectURL(new Blob([res[1]], {type: "audio/wav"}));
+        console.log("FRONT END RESULTS =>", res);
+
+        setVideo(res.videos[0].video);
+        console.log("VIDEO => ", video);
+
+        setUrl('ipfs://' + res.videos[0].video);
+        setTitle(res.videos[0].title);
+
+        setVideoTablelandId(res.videos[0].tablelandid);
+        console.log("VIDEO TABLELAND ID=>", videoTablelandId);
+        
+        setVideoId(res.videos[0].id);
+        console.log("VIDEO ID =>", videoId);
+        
+        const audioUrl = "https://bafybeibhxktwe3jy2tijwgxzxaql7yefbviyphb2q635fw76tllqva2pfm.ipfs.dweb.link/"
+        //const audioUrl = "https://" + res.videos[0].audio + '.ipfs.dweb.link/'
+        console.log("AUDIO URL =>", audioUrl);
+
+        setFileURL(audioUrl);
+        const localAudio = URL.createObjectURL(new Blob([audioUrl], {type: "audio/wav"}));
+
         console.log("LOCAL AUDIO =>", localAudio);
-        setFileURL(res[1]);
 
       }).catch((e) => {
         console.log(e.message)
@@ -103,7 +124,7 @@ const Home = () => {
 
           <Button className ="sample-btn" variant="primary" size="lg" active onClick={audioPage}>SAMPLE</Button>
           <Button className ="sample-btn" variant="primary" size="lg" active onClick={handleCollect}>COLLECT</Button>
-
+          <h2>{status}</h2>
         </div>
       </div>
             

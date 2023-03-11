@@ -43,12 +43,13 @@ export const mintSample = async (sample) => {
             file: sample.file, 
             tablelandPackId: sample.tablelandPackId,
             tablelandVideoId: sample.tablelandVideoId,
-            video_id: sample.videoId,
-            pack_id: sample.packId,
+            video_id: sample.video_id,
+            pack_id: sample.pack_id,
             start_time: sample.start_time, 
             end_time: sample.end_time, 
             duration: sample.duration, 
-            path: sample.path
+            path: sample.path,
+            index: sample.index
         }
 
         const sampleData = [

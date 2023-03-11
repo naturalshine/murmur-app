@@ -8,6 +8,7 @@ import {
   studioProvider,
 } from "@livepeer/react";
 import { FileContextProvider } from './contexts/fileContext';
+import { VideoContextProvider } from './contexts/videoContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const livepeerClient = createReactClient({
@@ -18,8 +19,10 @@ const livepeerClient = createReactClient({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <FileContextProvider>
+  <VideoContextProvider>
   <LivepeerConfig client={livepeerClient}>
     <App />
   </LivepeerConfig>
+  </VideoContextProvider>
   </FileContextProvider>
 );
