@@ -63,8 +63,8 @@ const Home = ({walletAddress}) => {
         setVideoId(res.videos[0].id);
         console.log("VIDEO ID =>", videoId);
         
-        const audioUrl = "https://bafybeibhxktwe3jy2tijwgxzxaql7yefbviyphb2q635fw76tllqva2pfm.ipfs.dweb.link/"
-        //const audioUrl = "https://" + res.videos[0].audio + '.ipfs.dweb.link/'
+        //const audioUrl = "https://bafybeidqq36lb2njfhjbqj5pgmsfjv6i4jqd67ecscu5wmskg2he66wshq.ipfs.dweb.link/"
+        const audioUrl = "https://" + res.videos[0].audio + '.ipfs.dweb.link/'
         console.log("AUDIO URL =>", audioUrl);
 
         setFileURL(audioUrl);

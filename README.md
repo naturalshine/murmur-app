@@ -6,7 +6,7 @@ This is the companion app to the [MURMUR API](https://github.com/naturalshine/mu
 
 ## Config
 
-See .sample.env for necessary environment variables
+See `.env.example` for necessary environment variables
 
 ## Commands
 
